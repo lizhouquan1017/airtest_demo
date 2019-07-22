@@ -1,0 +1,86 @@
+from poco.drivers.android.uiautomation import AndroidUiautomationPoco
+from poco.exceptions import InvalidOperationException
+from poco.exceptions import PocoNoSuchNodeException
+from poco.exceptions import PocoTargetTimeout
+from airtest.core.api import snapshot
+import logging
+
+
+class BaseView(object):
+
+    # 初始化方法
+    def __init__(self):
+        self.poco = AndroidUiautomationPoco()
+
+    # 点击方法
+    def click(self, value):
+        try:
+            self.poco(value).click()
+        except InvalidOperationException:
+            logging.error('点击操作未完成！')
+
+    # 获取元素方法
+    def get_element(self, value):
+        try:
+            element = self.poco(value)
+            return element
+        except InvalidOperationException:
+            logging.error('无法获取元素！')
+
+    # 获取text属性值
+    def get_text(self, value):
+        try:
+            text = self.poco(value).get_text()
+            return text
+        except PocoNoSuchNodeException:
+            logging.error('无法获取元素属性！')
+
+    # 判断元素是否存在
+    def is_exists(self, value):
+        try:
+            flag = self.poco(value).exists()
+            return flag
+        except PocoNoSuchNodeException:
+            logging.error('元素不存在！')
+
+    # 滑动
+    def swipe(self, value, flag):
+        try:
+            if flag == 'up':
+                self.poco(value).swipe([0, -0.1])
+                self.poco(value).swipe('up')
+            elif flag == 'down':
+                self.poco(value).swipe([0, -0.1])
+                self.poco(value).swipe('down')
+            elif flag == 'left':
+                self.poco(value).swipe([-0.1, 0])
+                self.poco(value).swipe('left')
+            elif flag == 'right':
+                self.poco(value).swipe([-0.1, 0])
+                self.poco(value).swipe('right')
+        except InvalidOperationException:
+            logging.error('滑动操作未完成！')
+
+    # 输入
+    def type(self, value, text):
+        try:
+            self.poco(value).invalidate()
+            self.poco(value).set_text(text)
+        except InvalidOperationException:
+            logging.error('输入操作未完成！')
+
+    # 等待元素出现
+    def wait_for_any(self, value):
+        try:
+            element = self.poco(value).wait_for_appearance()
+            return element
+        except PocoTargetTimeout:
+            logging.error('元素超时未出现')
+
+    # 获取元素坐标
+    def get_element_pos(self, value):
+        try:
+            pos = self.poco(value).get_position()
+            return pos
+        except PocoNoSuchNodeException:
+            logging.error(r'无法获取元素位子')
