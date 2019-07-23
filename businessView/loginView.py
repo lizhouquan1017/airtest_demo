@@ -1,9 +1,7 @@
 # coding:utf-8
 import logging
-from selenium.common.exceptions import NoSuchElementException
 from baseView.baseView import BaseView
 from tools.common import Common
-from airtest.core.api import *
 
 
 class LoginView(BaseView):
@@ -20,32 +18,26 @@ class LoginView(BaseView):
 
     # 登录成功
     def login_action(self, username, password):
-        try:
-            logging.info(r'==登录操作开始==')
-            logging.info('输入用户名:%s' % username)
-            self.type(self.username_value, username)
-            logging.info('输入密码:%s' % password)
-            self.type(self.password_value, password)
-            logging.info('点击登录按钮')
-            self.click(self.loginBtn_value)
-            logging.info('登录完成')
-        except NoSuchElementException:
-            snapshot('元素未出现')
+        logging.info(r'==登录操作开始==')
+        logging.info('输入用户名:%s' % username)
+        self.type(self.username_value, username)
+        logging.info('输入密码:%s' % password)
+        self.type(self.password_value, password)
+        logging.info('点击登录按钮')
+        self.click(self.loginBtn_value)
+        logging.info('登录完成')
 
     # 验证码登录
     def login_code_action(self, username, code):
-        try:
-            logging.info('==验证码登录用例开始==')
-            self.click(self.changeLoginBtn_value)
-            logging.info('输入用户名:%s' % username)
-            self.type(self.username_value, username)
-            logging.info('输入验证码:%s' % code)
-            self.type(self.code_value, code)
-            logging.info('点击登录按钮')
-            self.click(self.loginBtn_value)
-            logging.info('==检查验证码登录状态==')
-        except NoSuchElementException:
-            snapshot('元素未出现')
+        logging.info('==验证码登录用例开始==')
+        self.click(self.changeLoginBtn_value)
+        logging.info('输入用户名:%s' % username)
+        self.type(self.username_value, username)
+        logging.info('输入验证码:%s' % code)
+        self.type(self.code_value, code)
+        logging.info('点击登录按钮')
+        self.click(self.loginBtn_value)
+        logging.info('==检查验证码登录状态==')
 
     # 体验账号登录
     def login_experience_account_action(self):

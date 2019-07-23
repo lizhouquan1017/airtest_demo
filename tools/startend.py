@@ -2,9 +2,13 @@
 
 import unittest
 from airtest.core.api import *
-import yaml
+import yaml, logging.config
 
 yaml.warnings({'YAMLLoadWarning': False})
+log_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../config/log.conf')
+logging.config.fileConfig(log_file_path)
+logger = logging.getLogger()
+
 with open('../config/devices.yaml', 'r', encoding='gbk') as file:
     data = yaml.load(file)
 
