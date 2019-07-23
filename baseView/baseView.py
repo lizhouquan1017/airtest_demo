@@ -3,7 +3,6 @@ from poco.exceptions import InvalidOperationException
 from poco.exceptions import PocoNoSuchNodeException
 from poco.exceptions import PocoTargetTimeout
 from tools.conn import Database
-from airtest.core.api import snapshot
 import logging,csv
 
 

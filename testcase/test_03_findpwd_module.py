@@ -1,7 +1,10 @@
 # coding = utf-8
 from businessView.findPwdView import FindPwdView
 from tools.startend import StartEnd
-import logging
+import logging, random
+
+num = random.randint(100000, 999999)
+pwd = 'ab'+str(num)
 
 
 class FindPwdTest(StartEnd):
@@ -15,10 +18,12 @@ class FindPwdTest(StartEnd):
         find = FindPwdView()
         data0 = find.get_csv_data('../data/loginView.csv', 1)
         data1 = find.get_csv_data('../data/pwd.csv', 10)
-        find.findpwd_action(data1[0], data1[1])
-        find.modify_action(data1[2], data1[3])
+        find.findpwd_action(data1[0], data1[2])
+        find.modify_action(data1[3], data1[3])
         self.assertTrue(find.check_find_pwd_success_status())
         find.update_csv_data('../data/loginView.csv', 1, '正式账号', data0[2], data1[3])
+        logging.info(pwd)
+        find.update_csv_data('../data/pwd.csv', 1, '修改密码', data1[3], pwd)
 
     # 手机号为空找回密码
     def test_02_findpwd_phoneNumEmpty(self):
@@ -130,8 +135,8 @@ class FindPwdTest(StartEnd):
         '''
         logging.info(r'==修改密码新旧密码重复用例==')
         find = FindPwdView()
-        data = find.get_csv_data('../data/pwd.csv', 11)
-        find.findpwd_action(data[0], data[1])
-        find.modify_action(data[2], data[3])
+        data = find.get_csv_data('../data/pwd.csv', 10)
+        find.findpwd_action(data[0], data[2])
+        find.modify_action(data[3], data[3])
         self.assertTrue(find.check_modify_pwd_fail_status())
 
