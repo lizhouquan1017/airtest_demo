@@ -1,0 +1,5 @@
+# 数据库配置文件
+localhost: 10.10.13.120
+user: jxc
+password: jxc
+database: jxc

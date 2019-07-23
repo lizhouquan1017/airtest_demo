@@ -2,15 +2,17 @@ from poco.drivers.android.uiautomation import AndroidUiautomationPoco
 from poco.exceptions import InvalidOperationException
 from poco.exceptions import PocoNoSuchNodeException
 from poco.exceptions import PocoTargetTimeout
+from tools.conn import Database
 from airtest.core.api import snapshot
 import logging,csv
 
 
-class BaseView(object):
+class BaseView(Database):
 
     # 初始化方法
     def __init__(self):
         self.poco = AndroidUiautomationPoco()
+        super().__init__()
 
     # 点击方法
     def click(self, value):
@@ -18,6 +20,10 @@ class BaseView(object):
             self.poco(value).click()
         except InvalidOperationException:
             logging.error('点击操作未完成！')
+
+    # 无固定id元素点击
+    def click_text(self, value):
+        self.poco(text=value).click()
 
     # 获取元素方法
     def get_element(self, value):
@@ -114,3 +120,10 @@ class BaseView(object):
                 filewriter.writelines(line)
         filewriter.close()
         filereader.close()
+
+    # 数据库中查找数据
+    def select_data_from_db(self, sql):
+        self.connmysql()
+        data = self.fetch_all(sql)
+        self.close()
+        return data
