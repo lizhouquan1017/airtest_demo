@@ -3,19 +3,15 @@ from businessView.purchaseView import PurchaseView
 from businessView.purchaseorderView import PurchaseOrderView
 from businessView.loginView import LoginView
 from tools.common import Common
-from airtest.core.api import *
-import unittest, time
+from tools.startend import StartEnd
+import time
 
 
-class PurchaseTest(unittest.TestCase):
+class PurchaseTest(StartEnd):
     config1 = Common.read_config('/db/purchaseSQL.ini')
     config2 = Common.read_config('/db/goodsSQL.ini')
     sql1 = Common.get_content(config1, "采购单单号查询语句", "sql")
     sql2 = Common.get_content(config2, "商品库存查询语句", "sql")
-
-    def setUp(self):
-        connect_device('Android:///CLB7N18403015180')
-        start_app('com.gengcon.android.jxc')
 
     # 登录操作
     def login_action(self):
@@ -50,6 +46,9 @@ class PurchaseTest(unittest.TestCase):
 
     # 采购单作废用例
     def test_02_obsolete_order_case(self):
+        '''
+        采购单作废用例
+        '''
         self.login_action()
         num1 = self.get_goods_num() - 1
         purchaseorder = PurchaseOrderView()
@@ -100,11 +99,3 @@ class PurchaseTest(unittest.TestCase):
         # 设置检查点
         self.assertTrue(purchaseorder.check_transaction_success_status())
         self.assertEqual(num1+1, num2)
-
-    def tearDown(self):
-        clear_app('com.gengcon.android.jxc')
-        stop_app('com.gengcon.android.jxc')
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -1,18 +1,14 @@
 # coding:utf-8
 from businessView.cashierView import CashierView
 from businessView.loginView import LoginView
-from airtest.core.api import *
 from tools.common import Common
-import unittest,logging, time
+from tools.startend import StartEnd
+import logging, time
 
 
-class CashierTest(unittest.TestCase):
+class CashierTest(StartEnd):
     config = Common.read_config('/db/goodsSQL.ini')
     sql = Common.get_content(config, "商品库存查询语句", "sql")
-
-    def setUp(self):
-        connect_device('Android:///CLB7N18403015180')
-        start_app('com.gengcon.android.jxc')
 
     # 登录操作
     def login_action(self):
@@ -97,11 +93,3 @@ class CashierTest(unittest.TestCase):
         cashier.pay_bill_mo_action()
         self.assertTrue(cashier.check_transaction_success_status())
         self.assertEqual(cashier.get_order_price(), r'￥115.00')
-
-    def tearDown(self):
-        clear_app('com.gengcon.android.jxc')
-        stop_app('com.gengcon.android.jxc')
-
-
-if __name__ == '__main__':
-    unittest.main()

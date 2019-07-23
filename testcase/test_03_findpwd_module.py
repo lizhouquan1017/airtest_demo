@@ -1,14 +1,10 @@
 # coding = utf-8
 from businessView.findPwdView import FindPwdView
-from airtest.core.api import *
-import unittest, logging
+from tools.startend import StartEnd
+import logging
 
 
-class FindPwdTest(unittest.TestCase):
-
-    def setUp(self):
-        connect_device('Android:///CLB7N18403015180')
-        start_app('com.gengcon.android.jxc')
+class FindPwdTest(StartEnd):
 
     # 修改密码成功
     def test_01_modify_pwdSuccess(self):
@@ -139,10 +135,3 @@ class FindPwdTest(unittest.TestCase):
         find.modify_action(data[2], data[3])
         self.assertTrue(find.check_modify_pwd_fail_status())
 
-    def tearDown(self):
-        clear_app('com.gengcon.android.jxc')
-        stop_app('com.gengcon.android.jxc')
-
-
-if __name__ == '__main__':
-    unittest.main()

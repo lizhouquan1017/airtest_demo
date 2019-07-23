@@ -1,14 +1,10 @@
 # coding:utf-8
 from businessView.loginView import LoginView
-from airtest.core.api import *
-import unittest,logging
+from tools.startend import StartEnd
+import logging
 
 
-class LoginTest(unittest.TestCase):
-
-    def setUp(self):
-        connect_device('Android:///CLB7N18403015180')
-        start_app('com.gengcon.android.jxc')
+class LoginTest(StartEnd):
 
     def test_01_user_login(self):
         '''
@@ -129,10 +125,3 @@ class LoginTest(unittest.TestCase):
         login.login_code_action(data[0], data[1])
         self.assertTrue(login.check_login_fail_status())
 
-    def tearDown(self):
-        clear_app('com.gengcon.android.jxc')
-        stop_app('com.gengcon.android.jxc')
-
-
-if __name__ == '__main__':
-    unittest.main()

@@ -1,14 +1,10 @@
 # coding:utf-8
 from businessView.registerView import RegisterView
-from airtest.core.api import *
-import unittest, logging, os
+from tools.startend import StartEnd
+import logging
 
 
-class RegisterTest(unittest.TestCase):
-
-    def setUp(self):
-        connect_device('Android:///CLB7N18403015180')
-        start_app('com.gengcon.android.jxc')
+class RegisterTest(StartEnd):
 
     # 正常注册
     def test_01_user_register(self):
@@ -56,10 +52,3 @@ class RegisterTest(unittest.TestCase):
         register.register_common_action(data[0], data[1], data[2])
         self.assertTrue(register.check_register_fail_status())
 
-    def tearDown(self):
-        clear_app('com.gengcon.android.jxc')
-        stop_app('com.gengcon.android.jxc')
-
-
-if __name__ == '__main__':
-    unittest.main()

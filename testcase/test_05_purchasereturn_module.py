@@ -3,19 +3,15 @@ from businessView.purchasereturnView import PurchaseReturnView
 from businessView.purchasereturnorderView import PurchaseReturnOrderView
 from businessView.loginView import LoginView
 from tools.common import Common
-from airtest.core.api import *
-import unittest, time
+from tools.startend import StartEnd
+import time
 
 
-class PurchaseReturnTest(unittest.TestCase):
+class PurchaseReturnTest(StartEnd):
 
     config1 = Common.read_config('/db/purchasereturnSQL.ini')
     config2 = Common.read_config('/db/goodsSQL.ini')
     sql2 = Common.get_content(config2, "商品库存查询语句", "sql")
-
-    def setUp(self):
-        connect_device('Android:///CLB7N18403015180')
-        start_app('com.gengcon.android.jxc')
 
     # 登录操作
     def login_action(self):
@@ -102,10 +98,3 @@ class PurchaseReturnTest(unittest.TestCase):
         self.assertTrue(purchasereturnorder.check_transaction_success_status())
         self.assertEqual(num1, num2)
 
-    def tearDown(self):
-        clear_app('com.gengcon.android.jxc')
-        stop_app('com.gengcon.android.jxc')
-
-
-if __name__ == '__main__':
-    unittest.main()
