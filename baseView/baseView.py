@@ -3,7 +3,7 @@ from poco.exceptions import InvalidOperationException
 from poco.exceptions import PocoNoSuchNodeException
 from poco.exceptions import PocoTargetTimeout
 from airtest.core.api import snapshot
-import logging
+import logging,csv
 
 
 class BaseView(object):
@@ -72,7 +72,7 @@ class BaseView(object):
     # 等待元素出现
     def wait_for_any(self, value):
         try:
-            element = self.poco(value).wait_for_appearance()
+            element = self.poco(text=value).wait_for_appearance()
             return element
         except PocoTargetTimeout:
             logging.error('元素超时未出现')
@@ -84,3 +84,33 @@ class BaseView(object):
             return pos
         except PocoNoSuchNodeException:
             logging.error(r'无法获取元素位子')
+
+    # 从csv文件中获取数据
+    def get_csv_data(self, csv_file, line):
+        logging.info(r'获取输入数据')
+        with open(csv_file, 'r', encoding='gbk') as file:
+            reader = csv.reader(file)
+            for index, row in enumerate(reader, 1):
+                if index == line:
+                    return row
+
+    # 存数据导csv文件
+    def save_csv_data(self, csv_file, datas):
+        logging.info(r'存储数据到%s' % csv_file)
+        with open(csv_file, 'w', encoding='gbk') as file:
+            file.write(datas+'\n')
+            logging.info(r'数据保存成功')
+
+    # 更新数据导csv文件
+    def update_csv_data(self, csv_file, index, flag, old, new):
+        filereader = open(csv_file, 'r')
+        rows = filereader.readlines()
+        filewriter = open(csv_file, 'w')
+        for line in rows:
+            l = line.split(',')
+            if l[index] == flag:
+                filewriter.writelines(line.replace(old, new))
+            else:
+                filewriter.writelines(line)
+        filewriter.close()
+        filereader.close()

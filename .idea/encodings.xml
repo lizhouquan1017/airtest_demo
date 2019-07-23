@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+    <file url="file://$PROJECT_DIR$/businessView/loginView.py" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/data/loginView.csv" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/page/loginView.ini" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/testcase/test_01_login_module.py" charset="GBK" />
+  </component>
+</project>
