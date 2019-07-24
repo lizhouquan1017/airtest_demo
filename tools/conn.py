@@ -6,10 +6,10 @@ yaml.warnings({'YAMLLoadWarning': False})
 with open('../config/db.yaml', 'r', encoding='gbk') as file:
     data = yaml.load(file)
 
-    localhost = data['localhost']
-    username = data['user']
-    password = data['password']
-    database = data['database']
+    localhost = '10.10.13.120'
+    username = 'jxc'
+    password = 'jxc'
+    database = 'jxc'
 
 
 class Database(object):
