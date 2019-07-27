@@ -1,10 +1,12 @@
 # coding:utf-8
 from businessView.registerView import RegisterView
 from tools.startend import StartEnd
+from tools.TestCaase import TestCase_
+
 import logging
 
 
-class RegisterTest(StartEnd):
+class RegisterTest(StartEnd,TestCase_):
 
     # 正常注册
     def test_01_user_register(self):

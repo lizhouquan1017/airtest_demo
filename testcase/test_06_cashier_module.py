@@ -3,10 +3,12 @@ from businessView.cashierView import CashierView
 from businessView.loginView import LoginView
 from tools.common import Common
 from tools.startend import StartEnd
+from tools.TestCaase import TestCase_
+
 import logging, time
 
 
-class CashierTest(StartEnd):
+class CashierTest(StartEnd, TestCase_):
     config = Common.read_config('/db/goodsSQL.ini')
     sql = Common.get_content(config, "商品库存查询语句", "sql")
 

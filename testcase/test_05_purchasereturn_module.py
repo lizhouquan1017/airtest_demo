@@ -4,10 +4,12 @@ from businessView.purchasereturnorderView import PurchaseReturnOrderView
 from businessView.loginView import LoginView
 from tools.common import Common
 from tools.startend import StartEnd
+from tools.TestCaase import TestCase_
+
 import time
 
 
-class PurchaseReturnTest(StartEnd):
+class PurchaseReturnTest(StartEnd,TestCase_):
 
     config1 = Common.read_config('/db/purchasereturnSQL.ini')
     config2 = Common.read_config('/db/goodsSQL.ini')

@@ -4,10 +4,12 @@ from businessView.purchaseorderView import PurchaseOrderView
 from businessView.loginView import LoginView
 from tools.common import Common
 from tools.startend import StartEnd
+from tools.TestCaase import TestCase_
+
 import time
 
 
-class PurchaseTest(StartEnd):
+class PurchaseTest(StartEnd, TestCase_):
     config1 = Common.read_config('/db/purchaseSQL.ini')
     config2 = Common.read_config('/db/goodsSQL.ini')
     sql1 = Common.get_content(config1, "采购单单号查询语句", "sql")

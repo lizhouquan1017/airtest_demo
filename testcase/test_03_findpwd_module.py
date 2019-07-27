@@ -2,12 +2,14 @@
 from businessView.findPwdView import FindPwdView
 from tools.startend import StartEnd
 import logging, random, unittest
+from tools.TestCaase import TestCase_
+
 
 num = random.randint(100000, 999999)
 pwd = 'ab'+str(num)
 
 
-class FindPwdTest(StartEnd):
+class FindPwdTest(StartEnd, TestCase_):
 
     # 修改密码成功
     def test_01_modify_pwdSuccess(self):
@@ -142,6 +144,3 @@ class FindPwdTest(StartEnd):
         find.modify_action(data[3], data[3])
         self.assertTrue(find.check_modify_pwd_fail_status())
 
-
-if __name__ == '__main__':
-    unittest.main()

@@ -3,10 +3,12 @@ from businessView.salesreturnView import SalesReturnView
 from businessView.loginView import LoginView
 from tools.common import Common
 from tools.startend import StartEnd
+from tools.TestCaase import TestCase_
+
 import time,logging
 
 
-class SalesReturnTest(StartEnd):
+class SalesReturnTest(StartEnd,TestCase_):
 
     config = Common.read_config('/db/goodsSQL.ini')
     sql = Common.get_content(config, "商品库存查询语句", "sql")

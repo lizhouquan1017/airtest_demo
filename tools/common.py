@@ -17,3 +17,4 @@ class Common(object):
     def get_content(config, type, typename):
         content = config.get(type, typename)
         return content
+

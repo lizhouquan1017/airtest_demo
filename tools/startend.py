@@ -25,3 +25,19 @@ class StartEnd(unittest.TestCase):
     def tearDown(self):
         clear_app(package)
         stop_app(package)
+
+    def rerun(self, setup, teardown, n):
+        def wrapper(func):
+            def inner(*args, **kwargs):
+                for i in range(n):
+                    try:
+                        print('第%s次尝试' % i)
+                        ret = func(*args, **kwargs)
+                        return ret
+                    except Exception:
+                        print('have a error')
+                        setup(*args)
+                        teardown(*args)
+                raise Exception
+            return inner
+        return wrapper

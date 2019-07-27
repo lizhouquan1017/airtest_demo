@@ -1,10 +1,11 @@
 # coding:utf-8
 from businessView.loginView import LoginView
 from tools.startend import StartEnd
+from tools.TestCaase import TestCase_
 import logging
 
 
-class LoginTest(StartEnd):
+class LoginTest(StartEnd, TestCase_):
 
     def test_01_user_login(self):
         '''
