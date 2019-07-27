@@ -4,6 +4,7 @@ from businessView.loginView import LoginView
 from tools.common import Common
 from tools.startend import StartEnd
 from tools.TestCaase import TestCase_
+from businessView.salesorderView import SalesOrderView
 
 import logging, time
 
@@ -95,3 +96,41 @@ class CashierTest(StartEnd, TestCase_):
         cashier.pay_bill_mo_action()
         self.assertTrue(cashier.check_transaction_success_status())
         self.assertEqual(cashier.get_order_price(), r'￥115.00')
+
+    # 销售单作废
+    def test_07_obsolete_case(self):
+        '''
+        销售单作废
+        '''
+        # 操作之前库存数
+        num1 = self.get_goods_qty() + 1
+        self.login_action()
+        salesorder = SalesOrderView()
+        data = salesorder.get_csv_data('../data/salesOrderNum.csv', 1)
+        ordernum = data[0]
+        # 作废操作
+        salesorder.obsolete_action(ordernum)
+        time.sleep(3)
+        # 设置检查点
+        num2 = salesorder.check_stock_qty()
+        inv_ordernum = salesorder.check_invalid_purchase_ordernum()
+        self.assertEqual(num1, num2)
+        self.assertEqual(ordernum, inv_ordernum)
+
+    # 销售单复制在销售
+    def test_08_copy_case(self):
+        '''
+        销售单复制并生成新的销售单
+        '''
+        num1 = self.get_goods_qty()-1
+        self.login_action()
+        salesorder = SalesOrderView()
+        ordernum = salesorder.get_csv_data('../data/salesOrderNum.csv', 1)[0]
+        salesorder.copy_pay_action(ordernum)
+        time.sleep(3)
+        sales_order_num = salesorder.get_sales_order_num()
+        salesorder.save_csv_data('../data/salesOrderNum.csv', sales_order_num)
+        # 设置检查点
+        num2 = salesorder.check_stock_qty()
+        self.assertEqual(num1,num2)
+        self.assertTrue(salesorder.check_transaction_success_status())
