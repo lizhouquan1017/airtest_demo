@@ -9,7 +9,7 @@ test_dir = '../testcase'
 report_dir = '../report'
 test_dir1 = '../smokecase'
 
-discover = unittest.defaultTestLoader.discover(test_dir, pattern='test_01_login_module.py')
+discover = unittest.defaultTestLoader.discover(test_dir, pattern='test_06_cashier_module.py')
 
 now = time.strftime('%Y-%m-%d %H_%M_%S')
 report_name = report_dir+'/'+now+' test_report.html'
