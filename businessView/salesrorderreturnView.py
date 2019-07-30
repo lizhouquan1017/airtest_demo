@@ -23,7 +23,7 @@ class SalesOrderReturnView(BaseView):
     home_view = Common.get_content(config, '首页金额', 'value')
 
     # 销售退货界面控件
-    config1 = Common.read_config('/page/salesreturnView.ini')
+    config1 = Common.read_config('/page/salereturnView.ini')
     choose_goods_define = Common.get_content(config1, '选择退货确认按钮', 'value')
     salers_select = Common.get_content(config1, '销售员状态栏', 'value')
     saler = Common.get_content(config1, '销售员姓名', 'value')
@@ -53,6 +53,8 @@ class SalesOrderReturnView(BaseView):
         self.type(self.keyword_edit, ordernum)
         logging.info(r'点击确认')
         self.click(self.define_text)
+        logging.info(r'进入销售退货单详情界面')
+        self.click(self.goods_name)
         logging.info(r'点击操作按钮')
         self.click(self.operating_btn)
         if flag == 1:

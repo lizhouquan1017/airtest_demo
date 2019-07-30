@@ -46,7 +46,7 @@ class CashierTest(StartEnd, TestCase_):
         self.assertEqual(num1, num2, r'收银商品库存未减少')
 
     # 销售单复制在销售
-    def test_02_copy_case(self):
+    def test_02_sales_order_copy_case(self):
         '''
         销售单复制并生成新的销售单
         '''
@@ -64,7 +64,7 @@ class CashierTest(StartEnd, TestCase_):
         self.assertTrue(salesorder.check_transaction_success_status())
 
     # 销售单作废
-    def test_03_obsolete_case(self):
+    def test_03_sales_order_obsolete_case(self):
         '''
         销售单作废
         '''
@@ -211,12 +211,12 @@ class CashierTest(StartEnd, TestCase_):
         self.assertEqual(num1, num2)
 
     # 销售退货单作废
-    def test_13_sales_return_order_obsolete_case(self):
+    def test_12_sales_return_order_obsolete_case(self):
         '''
         销售退货单作废
         '''
         # 操作之前库存数
-        num1 = self.get_goods_qty() + 1
+        num1 = self.get_goods_qty() - 1
         self.login_action()
         salesreturnorder = SalesOrderReturnView()
         data = salesreturnorder.get_csv_data('../data/salesreturnOrderNum.csv', 1)
@@ -231,7 +231,7 @@ class CashierTest(StartEnd, TestCase_):
         self.assertEqual(ordernum, inv_ordernum)
 
     # 直接退货
-    def test_12_sales_direct_return_case(self):
+    def test_13_sales_direct_return_case(self):
         '''
             直接正常退货
         '''
@@ -256,7 +256,7 @@ class CashierTest(StartEnd, TestCase_):
         '''
         销售退货单复制在退货
         '''
-        num1 = self.get_goods_qty() - 1
+        num1 = self.get_goods_qty() + 1
         self.login_action()
         salesreturnorder = SalesOrderReturnView()
         ordernum = salesreturnorder.get_csv_data('../data/salesreturnOrderNum.csv', 1)[0]
@@ -269,6 +269,16 @@ class CashierTest(StartEnd, TestCase_):
         self.assertEqual(num1, num2)
         self.assertTrue(salesreturnorder.check_salesreturn_success_status())
 
-
+    # 销售退货单返回首页
+    def test_15_sales_return_order_gohome_case(self):
+        '''
+        销售退货单返回首页验证
+        '''
+        self.login_action()
+        salesreturnorder = SalesOrderReturnView()
+        ordernum = salesreturnorder.get_csv_data('../data/salesreturnOrderNum.csv', 1)[0]
+        salesreturnorder.opeterating_sales_return_order(3, ordernum)
+        # 设置检查点
+        self.assertTrue(salesreturnorder.check_gohome_status())
 
 
