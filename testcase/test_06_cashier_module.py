@@ -6,6 +6,7 @@ from tools.startend import StartEnd
 from tools.TestCaase import TestCase_
 from businessView.salesorderView import SalesOrderView
 from businessView.salesreturnView import SalesReturnView
+from businessView.salesrorderreturnView import SalesOrderReturnView
 
 import logging, time
 
@@ -209,6 +210,26 @@ class CashierTest(StartEnd, TestCase_):
         self.assertTrue(salesreturn.check_salesreturn_success_status())
         self.assertEqual(num1, num2)
 
+    # 销售退货单作废
+    def test_13_sales_return_order_obsolete_case(self):
+        '''
+        销售退货单作废
+        '''
+        # 操作之前库存数
+        num1 = self.get_goods_qty() + 1
+        self.login_action()
+        salesreturnorder = SalesOrderReturnView()
+        data = salesreturnorder.get_csv_data('../data/salesreturnOrderNum.csv', 1)
+        ordernum = data[0]
+        # 作废操作
+        salesreturnorder.opeterating_sales_return_order(1, ordernum)
+        time.sleep(3)
+        # 设置检查点
+        num2 = salesreturnorder.check_stock_qty()
+        inv_ordernum = salesreturnorder.check_invalid_purchase_ordernum()
+        self.assertEqual(num1, num2)
+        self.assertEqual(ordernum, inv_ordernum)
+
     # 直接退货
     def test_12_sales_direct_return_case(self):
         '''
@@ -229,6 +250,24 @@ class CashierTest(StartEnd, TestCase_):
         # 设置检查点
         self.assertTrue(salesreturn.check_salesreturn_success_status())
         self.assertEqual(num1, num2)
+
+    # 销售退货单复制在退货
+    def test_14_sales_return_order_copy_case(self):
+        '''
+        销售退货单复制在退货
+        '''
+        num1 = self.get_goods_qty() - 1
+        self.login_action()
+        salesreturnorder = SalesOrderReturnView()
+        ordernum = salesreturnorder.get_csv_data('../data/salesreturnOrderNum.csv', 1)[0]
+        salesreturnorder.opeterating_sales_return_order(2, ordernum)
+        time.sleep(3)
+        sales_order_num = salesreturnorder.get_reutrn_order_num()
+        salesreturnorder.save_csv_data('../data/salesreturnOrderNum.csv', sales_order_num)
+        # 设置检查点
+        num2 = salesreturnorder.check_stock_qty()
+        self.assertEqual(num1, num2)
+        self.assertTrue(salesreturnorder.check_salesreturn_success_status())
 
 
 

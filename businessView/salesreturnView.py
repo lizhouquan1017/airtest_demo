@@ -7,8 +7,8 @@ from tools.common import Common
 
 class SalesReturnView(BaseView):
 
-    # 注册页面元素
-    config = Common.read_config('/page/salesreturn.ini')
+    # 销售退货页面控件
+    config = Common.read_config('/page/salesreturnView.ini')
     inventory_btn = Common.get_content(config, '库存按钮', 'value')
     sales_return_btn = Common.get_content(config, '销售退货', 'value')
     sales_return_account = Common.get_content(config, '退货账户', 'value')
@@ -131,14 +131,4 @@ class SalesReturnView(BaseView):
     def get_return_order_total_amount(self):
         total_amount = self.get_text(self.total_amount)
         return total_amount
-
-
-
-
-
-
-
-
-
-
 

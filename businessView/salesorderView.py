@@ -33,7 +33,7 @@ class SalesOrderView(BaseView):
     # sql语句
     config1 = Common.read_config('/db/salesSQL.ini')
     config2 = Common.read_config('/db/goodsSQL.ini')
-    sql1 = Common.get_content(config1, "销售作废单查询", "sql")
+    sql1 = Common.get_content(config1, "销售单作废查询", "sql")
     sql2 = Common.get_content(config2, "商品库存查询语句", "sql")
 
     # 进入销售单界面
