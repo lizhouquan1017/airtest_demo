@@ -20,6 +20,7 @@ class StartEnd(unittest.TestCase):
 
     def setUp(self):
         connect_device('Android:///' + devicesname)
+        wake()
         start_app(package)
 
     def tearDown(self):
