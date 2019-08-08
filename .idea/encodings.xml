@@ -30,8 +30,7 @@
     <file url="file://$PROJECT_DIR$/page/purchasereturnView.ini" charset="GBK" />
     <file url="file://$PROJECT_DIR$/page/purchasereturnorderView.ini" charset="GBK" />
     <file url="file://$PROJECT_DIR$/page/registerView.ini" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/page/salesreturnView.ini" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/runcase/run.py" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/runcase/run_all.py" charset="GBK" />
     <file url="file://$PROJECT_DIR$/testcase/test_01_login_module.py" charset="GBK" />
     <file url="file://$PROJECT_DIR$/testcase/test_02_register_module.py" charset="GBK" />
     <file url="file://$PROJECT_DIR$/testcase/test_03_findpwd_module.py" charset="GBK" />
