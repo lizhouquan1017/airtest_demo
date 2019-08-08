@@ -1,4 +1,4 @@
-# coding = utf-8
+# coding:gbk
 import unittest, time, sys
 from BeautifulReport import BeautifulReport
 
