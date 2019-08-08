@@ -1,15 +1,16 @@
 # coding:utf-8
 
-import pymysql, yaml
+import pymysql
+import yaml
 
 yaml.warnings({'YAMLLoadWarning': False})
 with open('../config/db.yaml', 'r', encoding='gbk') as file:
     data = yaml.load(file)
 
-    localhost = '10.10.13.120'
-    username = 'jxc'
-    password = 'jxc'
-    database = 'jxc'
+    localhost = data['localhost']
+    username = data['user']
+    password = data['password']
+    database = data['database']
 
 
 class Database(object):
@@ -56,15 +57,8 @@ class Database(object):
 
 
 if __name__ == '__main__':
-    # with open('../config/db.yaml', 'r', encoding='gbk') as file:
-    #     data = yaml.load(file)
-    #
-    #     localhost = data['localhost']
-    #     username = data['user']
-    #     password = data['password']
-    #     database = data['database']
     d = Database()
     d.connmysql()
     res = d.fetch_all('SELECT * from jxc_t_user where phone_num = 15927169432')
     d.close()
-    print(res[0][r'id'])
+    print((res[0][r'id']))
