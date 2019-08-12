@@ -2,6 +2,7 @@
 import unittest
 import time
 import sys
+sys.path.append('..')
 import yaml
 from BeautifulReport import BeautifulReport
 from tools.PushApkToDevices import push_apk_to_devices

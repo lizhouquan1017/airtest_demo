@@ -2,6 +2,7 @@
 import unittest
 import time
 import sys
+sys.path.append('..')
 import yaml
 from BeautifulReport import BeautifulReport
 from tools.PushApkToDevices import push_apk_to_devices
@@ -15,7 +16,7 @@ time.sleep(3)
 path = 'D:\\airtest_demo\\'
 sys.path.append(path)
 
-report_dir = 'D:/software/jenkins/workspace/jxc_autoTest/report'
+report_dir = 'D:/software/jenkins/workspace/jxc_online_smoke_autotest/report'
 test_dir = '../smokecase'
 discover = unittest.defaultTestLoader.discover(test_dir, pattern='test*.py')
 
