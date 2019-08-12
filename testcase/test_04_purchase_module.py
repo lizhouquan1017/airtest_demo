@@ -5,6 +5,7 @@ from businessView.loginView import LoginView
 from tools.common import Common
 from tools.startend import StartEnd
 from tools.TestCaase import TestCase_
+from tools.readCfg import ReadData
 
 import time
 
@@ -29,15 +30,14 @@ class PurchaseTest(StartEnd, TestCase_):
 
     # 正常采购用例
     def test_01_purchase_case(self):
-        '''
-        正常采购成功用例
-        '''
+        """正常采购成功用例"""
         self.login_action()
         num1 = self.get_goods_num()
         purchase = PurchaseView()
         purchase.purchase_success_action()
         order_num = purchase.get_purchase_order_num()
-        purchase.save_csv_data('../data/purchaseOrderNum.csv', order_num)
+        # purchase.save_csv_data('../data/purchaseOrderNum.csv', order_num)
+        ReadData().write_data('purchase_order', 'num', order_num)
         num2 = purchase.select_data_from_db(self.sql2)[0]['stockQty']
         db_order_num = purchase.select_data_from_db(self.sql1)[0]['order_code']
         purchase_num = purchase.get_purchase_num()
@@ -48,13 +48,12 @@ class PurchaseTest(StartEnd, TestCase_):
 
     # 采购单作废用例
     def test_02_obsolete_order_case(self):
-        '''
-        采购单作废用例
-        '''
+        """采购单作废用例"""
         self.login_action()
         num1 = self.get_goods_num() - 1
         purchaseorder = PurchaseOrderView()
-        ordernum = purchaseorder.get_csv_data('../data/purchaseOrderNum.csv', 1)[0]
+        # ordernum = purchaseorder.get_csv_data('../data/purchaseOrderNum.csv', 1)[0]
+        ordernum = ReadData().get_data('purchase_order', 'num')
         purchaseorder.obsolete_purchase_order(1, ordernum)
         time.sleep(3)
         num2 = purchaseorder.check_stock_qty()
@@ -65,15 +64,14 @@ class PurchaseTest(StartEnd, TestCase_):
 
     # 采购改价用例
     def test_03_purchase_modfiy_price_case(self):
-        '''
-        采购进货修改价格采购成功
-        '''
+        """采购进货修改价格采购成功"""
         self.login_action()
         num1 = self.get_goods_num()
         purchase = PurchaseView()
         purchase.purchase_modfiy_price_action()
         order_num = purchase.get_purchase_order_num()
-        purchase.save_csv_data('../data/purchaseOrderNum.csv', order_num)
+        # purchase.save_csv_data('../data/purchaseOrderNum.csv', order_num)
+        ReadData().write_data('purchase_order', 'num', order_num)
         num2 = purchase.select_data_from_db(self.sql2)[0]['stockQty']
         db_order_num = purchase.select_data_from_db(self.sql1)[0]['order_code']
         purchase_num = purchase.get_purchase_num()
@@ -86,16 +84,14 @@ class PurchaseTest(StartEnd, TestCase_):
 
     # 复制订单用例
     def test_04_copy_order_case(self):
-        '''
-        复制订单
-        '''
+        """复制订单"""
         self.login_action()
         num1 = self.get_goods_num()
         purchaseorder = PurchaseOrderView()
-        ordernum = purchaseorder.get_csv_data('../data/purchaseOrderNum.csv', 1)[0]
+        ordernum = ReadData().get_data('purchase_order', 'num')
         purchaseorder.copy_purchase_order(2, ordernum)
         order_num = purchaseorder.get_purchase_order_num()
-        purchaseorder.save_csv_data('../data/purchaseOrderNum.csv', order_num)
+        ReadData().write_data('purchase_order', 'num', order_num)
         time.sleep(2)
         num2 = purchaseorder.check_stock_qty()
         # 设置检查点

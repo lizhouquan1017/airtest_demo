@@ -1,7 +1,17 @@
 # coding:gbk
-import unittest, time, sys
+import unittest
+import time
+import sys
+import yaml
 from BeautifulReport import BeautifulReport
+from tools.PushApkToDevices import push_apk_to_devices
 
+with open('../config/devices.yaml', 'r', encoding='gbk') as file:
+    data = yaml.load(file)
+    devicesname = data['devicesname']
+
+push_apk_to_devices(devicesname)
+time.sleep(3)
 path = 'D:\\airtest_demo\\'
 sys.path.append(path)
 

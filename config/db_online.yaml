@@ -1,0 +1,6 @@
+# 数据库配置文件
+localhost: 10.10.13.211
+user: jxc
+password: jxc
+database: jxc
+port: 1036

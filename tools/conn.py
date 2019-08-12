@@ -4,13 +4,14 @@ import pymysql
 import yaml
 
 yaml.warnings({'YAMLLoadWarning': False})
-with open('../config/db.yaml', 'r', encoding='gbk') as file:
+with open('../config/db_online.yaml', 'r', encoding='gbk') as file:
     data = yaml.load(file)
 
     localhost = data['localhost']
     username = data['user']
     password = data['password']
     database = data['database']
+    port = data['port']
 
 
 class Database(object):
@@ -20,6 +21,7 @@ class Database(object):
         self._username = username
         self._password = password
         self._database = database
+        self._port = port
         self._conn = self.connmysql()
         if(self._conn):
             self._cursor = self._conn.cursor(cursor=pymysql.cursors.DictCursor)
@@ -28,7 +30,8 @@ class Database(object):
     def connmysql(self):
         conn = False
         try:
-            conn = pymysql.connect(host=self._localhost,user=self._username,password=self._password,database=self._database)
+            conn = pymysql.connect(host=self._localhost, user=self._username, password=self._password,
+                                   database=self._database, port=self._port)
         except Exception:
             conn = False
         return conn
