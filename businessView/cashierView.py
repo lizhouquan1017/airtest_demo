@@ -1,5 +1,6 @@
 # coding:utf-8
-import logging, time
+import logging
+import time
 from baseView.baseView import BaseView
 from tools.common import Common
 

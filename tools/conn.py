@@ -4,7 +4,7 @@ import pymysql
 import yaml
 
 yaml.warnings({'YAMLLoadWarning': False})
-with open('../config/db_online.yaml', 'r', encoding='gbk') as file:
+with open('../config/db.yaml', 'r', encoding='gbk') as file:
     data = yaml.load(file)
 
     localhost = data['localhost']
