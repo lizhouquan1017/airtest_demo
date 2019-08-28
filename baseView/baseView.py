@@ -52,20 +52,20 @@ class BaseView(Database):
             logging.error('元素不存在！')
 
     # 滑动
-    def swipe(self, value, flag):
+    def swipe(self, value, flag, x, y):
         try:
             if flag == 'up':
-                self.poco(value).swipe([0, -0.1])
-                self.poco(value).swipe('up')
+                self.poco(value).swipe([x, y])
+                # self.poco(value).swipe('up')
             elif flag == 'down':
                 self.poco(value).swipe([0, -0.1])
-                self.poco(value).swipe('down')
+                # self.poco(value).swipe('down')
             elif flag == 'left':
                 self.poco(value).swipe([-0.1, 0])
-                self.poco(value).swipe('left')
+                # self.poco(value).swipe('left')
             elif flag == 'right':
                 self.poco(value).swipe([-0.1, 0])
-                self.poco(value).swipe('right')
+                # self.poco(value).swipe('right')
         except InvalidOperationException:
             logging.error('滑动操作未完成！')
 

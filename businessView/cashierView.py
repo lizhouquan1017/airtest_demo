@@ -35,6 +35,10 @@ class CashierView(BaseView):
     hangup_btn_value = Common.get_content(config, "挂单按钮", "value")
     oreder_ib_value = Common.get_content(config, "挂单界面", "value")
     mo_edit_value = Common.get_content(config, "抹零输入框", "value")
+    offer_button = Common.get_content(config, "优惠框", "value")
+    offer_choose = Common.get_content(config, "优惠选择", "value")
+    offer_define = Common.get_content(config, "优惠确认", "value")
+    modfiy_price_edit = Common.get_content(config, "改价输入框", "value")
 
     # 选择商品action
     def choose_goods_action(self):
@@ -138,6 +142,12 @@ class CashierView(BaseView):
         self.choose_goods_action()
         logging.info(r'去结账')
         self.click(self.payBtn_value)
+        logging.info(r'点击整单优惠')
+        self.click(self.offer_button)
+        logging.info(r'滑动')
+        self.swipe(self.offer_choose, 'up', 0, -0.05)
+        logging.info(r'确认')
+        self.click(self.offer_define)
         logging.info(r'输入折扣')
         self.type(self.zhe_edit_value, 5)
         logging.info(r'现金支付')
@@ -146,12 +156,18 @@ class CashierView(BaseView):
         self.click(self.confirmCashBtn_value)
 
     # 结账界面折扣销售
-    def pay_bill_mo_action(self):
+    def pay_bill_offer_modfiyprice_action(self):
         self.choose_goods_action()
         logging.info(r'去结账')
         self.click(self.payBtn_value)
-        logging.info(r'输入抹零价格')
-        self.type(self.mo_edit_value, 5)
+        logging.info(r'点击整单优惠')
+        self.click(self.offer_button)
+        logging.info(r'滑动')
+        self.swipe(self.offer_choose, 'up', 0, -0.1)
+        logging.info(r'确认')
+        self.click(self.offer_define)
+        logging.info(r'输入改价后的价格')
+        self.type(self.modfiy_price_edit, 115)
         logging.info(r'现金支付')
         self.click_text(self.cashBtn_value)
         logging.info('确认收银')
