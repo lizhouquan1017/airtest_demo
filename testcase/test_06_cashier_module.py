@@ -154,30 +154,30 @@ class CashierTest(StartEnd, TestCase_):
         cashier.hangup_order_cashier_action()
         self.assertTrue(cashier.check_transaction_success_status())
 
-    # 结账界面打折
-    def test_09_zhe_case(self):
-        """结账界面打折"""
-        self.login_action()
-        cashier = CashierView()
-        cashier.pay_bill_zhe_action()
-        self.assertTrue(cashier.check_transaction_success_status())
-        self.assertEqual(cashier.get_order_price(), r'￥60.00')
-
-    # 结账界面抹零
-    def test_10_mo_case(self):
-        """结账界面抹零"""
-        self.login_action()
-        cashier = CashierView()
-        cashier.pay_bill_mo_action()
-        sales_order_num = cashier.get_sales_order_num()
-        # cashier.save_csv_data('../data/salesOrderNum.csv', sales_order_num)
-        ReadData().write_data('sale_order', 'num', sales_order_num)
-        self.assertTrue(cashier.check_transaction_success_status())
-        self.assertEqual(cashier.get_order_price(), r'￥115.00')
+    # # 结账界面打折
+    # def test_09_zhe_case(self):
+    #     """结账界面打折"""
+    #     self.login_action()
+    #     cashier = CashierView()
+    #     cashier.pay_bill_zhe_action()
+    #     self.assertTrue(cashier.check_transaction_success_status())
+    #     self.assertEqual(cashier.get_order_price(), r'￥60.00')
+    #
+    # # 结账界面抹零
+    # def test_10_mo_case(self):
+    #     """结账界面抹零"""
+    #     self.login_action()
+    #     cashier = CashierView()
+    #     cashier.pay_bill_mo_action()
+    #     sales_order_num = cashier.get_sales_order_num()
+    #     # cashier.save_csv_data('../data/salesOrderNum.csv', sales_order_num)
+    #     ReadData().write_data('sale_order', 'num', sales_order_num)
+    #     self.assertTrue(cashier.check_transaction_success_status())
+    #     self.assertEqual(cashier.get_order_price(), r'￥115.00')
 
     # 直接改价退货
     def test_11_sales_direct_return_case(self):
-        """直接改价退货"""
+        """销售退货直接改价退货"""
         self.login_action()
         # 获取退货之前的商品库存数
         num1 = self.get_goods_qty() + 1

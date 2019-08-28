@@ -30,6 +30,7 @@ class CashierView(BaseView):
     modfiy_edit_value = Common.get_content(config, "改价价格输入框", "value")
     modfiy_define_value = Common.get_content(config, "改价确认按钮", "value")
     total_money_value = Common.get_content(config, "实际收款金额", "value")
+    offer_bix = Common.get_content(config, "优惠框", "value")
     zhe_edit_value = Common.get_content(config, "折扣输入框", "value")
     hangup_btn_value = Common.get_content(config, "挂单按钮", "value")
     oreder_ib_value = Common.get_content(config, "挂单界面", "value")

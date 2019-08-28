@@ -58,10 +58,28 @@ class Database(object):
             except Exception:
                 pass
 
+    # 执行sql文件
+    def execute_sql_file(self):
+        try:
+            with open(u'../data/test.sql', 'r+') as f:
+                sql_list = f.read().split(';')[:-1]  # sql文件最后一行加上;
+                sql_list = [x.replace('\n', ' ') if '\n' in x else x for x in sql_list]  # 将每段sql里的换行符改成空格
+            ##执行sql语句，使用循环执行sql语句
+            for sql_item in sql_list:
+                if (self._conn):
+                    try:
+                        self._cursor.execute(sql_item)
+                    except Exception as e:
+                        print(e)
+        except Exception as e1:
+            print(e1)
+        finally:
+            self._cursor.close()
+            self._conn.commit()
+            self.close()
+
 
 if __name__ == '__main__':
     d = Database()
     d.connmysql()
-    res = d.fetch_all('SELECT * from jxc_t_user where phone_num = 15927169432')
-    d.close()
-    print((res[0][r'id']))
+    d.execute_sql_file()
