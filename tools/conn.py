@@ -82,4 +82,8 @@ class Database(object):
 if __name__ == '__main__':
     d = Database()
     d.connmysql()
-    d.execute_sql_file()
+    sql = "SELECT propvaluegroup_name FROM jxc_t_propvalue_group WHERE tenant_id = 1102522434130612226 " \
+          "AND is_del = 0 AND prop_code = 1546940630656758"
+    s = d.fetch_all(sql)
+    print(s)
+

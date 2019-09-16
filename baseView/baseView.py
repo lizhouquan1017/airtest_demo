@@ -5,8 +5,6 @@ from poco.exceptions import PocoTargetTimeout
 from tools.conn import Database
 import logging
 import csv
-import time
-import os
 
 
 class BaseView(Database):
@@ -61,7 +59,7 @@ class BaseView(Database):
                 self.poco(value).swipe([0, -0.1])
                 # self.poco(value).swipe('down')
             elif flag == 'left':
-                self.poco(value).swipe([-0.1, 0])
+                self.poco(value).swipe([x, y])
                 # self.poco(value).swipe('left')
             elif flag == 'right':
                 self.poco(value).swipe([-0.1, 0])
@@ -92,6 +90,29 @@ class BaseView(Database):
             return pos
         except PocoNoSuchNodeException:
             logging.error(r'无法获取元素位子')
+
+    # 长按
+    def long_click(self, value):
+        try:
+            pos = self.poco(value).long_click()
+            return pos
+        except PocoNoSuchNodeException:
+            logging.error(r'该元素无法长按')
+
+    # 获取元素组
+    def get_elements(self, *args):
+        try:
+            if len(args) == 2:
+                es = self.poco(args[0]).child(args[1]).children()
+                return es
+            elif len(args) == 3:
+                es = self.poco(args[0]).child(args[1]).child(args[2]).children()
+                return es
+            elif len(args) == 4:
+                es = self.poco(args[0]).child(args[1]).child(args[2]).child(args[3]).children()
+                return es
+        except PocoNoSuchNodeException:
+            logging.error(r'无法获取改元素组')
 
     # 从csv文件中获取数据
     def get_csv_data(self, csv_file, line):
