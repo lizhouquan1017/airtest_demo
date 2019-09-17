@@ -18,7 +18,7 @@ sys.path.append(path)
 
 report_dir = 'D:/software/jenkins/workspace/jxc_online_smoke_autotest/report'
 test_dir = '../testcase'
-discover = unittest.defaultTestLoader.discover(test_dir, pattern='test_00_goods_module.py')
+discover = unittest.defaultTestLoader.discover(test_dir, pattern='test_06_cashier_module.py')
 
 now = time.strftime('%Y-%m-%d %H_%M_%S')
 report_name = 'jxcreport.html'

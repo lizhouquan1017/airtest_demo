@@ -114,10 +114,12 @@ class SalesOrderView(BaseView):
         return sales_order_num
 
     # 检查数据库商品库存
-    def check_stock_qty(self):
-        res = self.select_data_from_db(self.sql2)
-        num = int(res[0]['stockQty'])
-        return num
+    def check_stock_qty(self, name):
+        arraylist = self.select_data_from_db(self.sql2)
+        for i in range(0, len(arraylist)):
+            if arraylist[i]['goods_name'] == name:
+                num = arraylist[i]['stockQty']
+                return num
 
     # 检查作废采购单单号
     def check_invalid_purchase_ordernum(self):

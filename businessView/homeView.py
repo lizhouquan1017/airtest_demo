@@ -16,7 +16,7 @@ class HomeViews(BaseView):
     sales_order = Common.get_content(config, "销售单号", "value")
 
     # 销售单号
-    sales_order_num = ReadData().get_data('sale_order', 'num')
+    sales_order_num = ReadData().get_data('sale_order', 'num1')
     # 销售退货单号
     sale_return_order_num = ReadData().get_data('sale_return_order', 'num')
     # 采购单号

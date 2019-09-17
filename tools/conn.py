@@ -42,7 +42,18 @@ class Database(object):
         if(self._conn):
             try:
                 self._cursor.execute(sql)
-                res =  self._cursor.fetchall()
+                res = self._cursor.fetchall()
+            except Exception:
+                res = False
+        return res
+
+    def update_all(self, sql):
+        res = ''
+        if (self._conn):
+            try:
+                self._cursor.execute(sql)
+                # res = self._cursor.fetchall()
+                self._conn.commit()
             except Exception:
                 res = False
         return res
@@ -82,8 +93,7 @@ class Database(object):
 if __name__ == '__main__':
     d = Database()
     d.connmysql()
-    sql = "SELECT propvaluegroup_name FROM jxc_t_propvalue_group WHERE tenant_id = 1102522434130612226 " \
-          "AND is_del = 0 AND prop_code = 1546940630656758"
-    s = d.fetch_all(sql)
+    sql = "UPDATE jxc_t_store_config SET is_erase_money = 0 WHERE store_id = 1102522434747174913"
+    s = d.update_all(sql)
     print(s)
 

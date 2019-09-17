@@ -33,6 +33,14 @@ class BaseView(Database):
         except InvalidOperationException:
             logging.error('无法获取元素！')
 
+    # 根据text获取元素
+    def get_element_by_text(self, value):
+        try:
+            element = self.poco(text=value)
+            return element
+        except InvalidOperationException:
+            logging.error('无法获取元素！')
+
     # 获取text属性值
     def get_text(self, value):
         try:
@@ -150,3 +158,9 @@ class BaseView(Database):
         data = self.fetch_all(sql)
         self.close()
         return data
+
+    # 修改数据库存中数据
+    def update_data_from_db(self, sql):
+        self.connmysql()
+        self.update_all(sql)
+        self.close()

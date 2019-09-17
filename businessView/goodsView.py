@@ -93,7 +93,6 @@ class GoodsViews(BaseView):
         self.click_text(self.Category_value2)
         logging.info('选择男士T恤')
         self.click_text(self.Category_value3)
-        logging.info('输入商品名称')
 
     # 新增商品操作
     def type_must_field(self, goodsname, costprice, saleprice, color_value, size_value, *args):
