@@ -27,7 +27,7 @@ class PurchaseOrderView(BaseView):
 
     # 采购界面按钮
     supplierName_value = Common.get_content(config_purchase, "供应商选择", "value")
-    supplierValue_value = Common.get_content(config_purchase, "供应商名称", "value")
+    # supplierValue_value = Common.get_content(config_purchase, "供应商名称", "value")
     confirmStorageBtn_value = Common.get_content(config_purchase, "采购入库按钮", "value")
     transaction_value = Common.get_content(config_purchase, "交易状态", "value")
 

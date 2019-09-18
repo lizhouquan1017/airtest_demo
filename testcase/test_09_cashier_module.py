@@ -226,4 +226,3 @@ class CashierTest(StartEnd, TestCase_):
         ReadData().write_data('sale_order', 'num16', sales_order_num)
         self.assertTrue(cashier.check_transaction_success_status())
         self.assertEqual(cashier.get_order_price(), r'￥90.00')
-
