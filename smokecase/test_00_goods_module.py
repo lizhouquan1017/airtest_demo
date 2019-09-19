@@ -99,7 +99,7 @@ class GoodsTest(StartEnd, TestCase_):
         self.login_action()
         goods = GoodsViews()
         goods.enter_goods_list()
-        goods.type_must_field('测试商品4号', 50, 90.4, '均色', '均码', 19891019, 50, '20190916-01')
+        goods.type_must_field('测试商品4号', 50, 90.4, '均色', '均码', 19891019, 30, '20190916-01')
         goods.confirm_add_goods()
         status = goods.check_success_status()
         goods.get_goods_details()
@@ -113,7 +113,7 @@ class GoodsTest(StartEnd, TestCase_):
         self.assertEqual('测试商品4号', goods_name)
         self.assertEqual('添加新品成功', status)
         self.assertEqual('19891019-01', sku_code)
-        self.assertEqual('10', stock_num)
+        self.assertEqual('30', stock_num)
         self.assertEqual('20190916-01', goods_bar_code)
 
     def test_05_add_case(self):
@@ -125,7 +125,7 @@ class GoodsTest(StartEnd, TestCase_):
         self.login_action()
         goods = GoodsViews()
         goods.enter_goods_list()
-        goods.type_must_field('测试商品5号', 100, 200, '均色', '均码', 19891020, 50, '20190917-01', '测试商品备注')
+        goods.type_must_field('测试商品5号', 100, 200, '均色', '均码', 19891020, 30, '20190917-01', '测试商品备注')
         goods.confirm_add_goods()
         status = goods.check_success_status()
         goods.get_goods_details()
@@ -140,7 +140,7 @@ class GoodsTest(StartEnd, TestCase_):
         self.assertEqual('测试商品5号', goods_name)
         self.assertEqual('添加新品成功', status)
         self.assertEqual('19891020-01', sku_code)
-        self.assertEqual('10', stock_num)
+        self.assertEqual('30', stock_num)
         self.assertEqual('20190917-01', goods_bar_code)
         self.assertEqual('测试商品备注', goods_remarks)
 
@@ -154,7 +154,7 @@ class GoodsTest(StartEnd, TestCase_):
         goods = GoodsViews()
         goods.enter_goods_list()
         goods.type_must_field('测试商品6号', 100, 200, '均色', '均码',
-                              19891021, 10, '20190918', '测试商品备注', 20, 50, '件', '棉', '春季', '长款', 'LV')
+                              19891021, 20, '20190918', '测试商品备注', 30, 20, '件', '棉', '春季', '长款', 'LV')
         goods.confirm_add_goods()
         status = goods.check_success_status()
         goods.get_goods_details()
@@ -171,7 +171,7 @@ class GoodsTest(StartEnd, TestCase_):
         self.assertEqual('测试商品6号', goods_name)
         self.assertEqual('添加新品成功', status)
         self.assertEqual('19891021-01', sku_code)
-        self.assertEqual('10', stock_num)
+        self.assertEqual('20', stock_num)
         self.assertEqual('20190918', goods_bar_code)
         self.assertEqual('测试商品备注', goods_remarks)
 

@@ -38,6 +38,7 @@ class PurchaseView(BaseView):
     continue_purchase = Common.get_content(config, "继续入库", "value")
     go_home = Common.get_content(config, "回到首页", "value")
     purchase_total_num = Common.get_content(config, "采购数", "value")
+    remark = Common.get_content(config, "备注", "value")
 
     # sql语句
     config1 = Common.read_config('/db/purchaseSQL.ini')
@@ -165,6 +166,11 @@ class PurchaseView(BaseView):
         self.click(self.box_define)
         logging.info(r'确认选择商品')
         self.click(self.goods_confirm_btn)
+
+    # 填写备注
+    def edit_remarks(self, info):
+        logging.info('添加备注信息')
+        self.type(self.remark, info)
 
     # 获取采购成功状态
     def check_transaction_success_status(self):

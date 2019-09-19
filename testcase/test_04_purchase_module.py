@@ -35,28 +35,28 @@ class PurchaseTest(StartEnd, TestCase_):
         """新增供应商"""
         self.login_action()
         purchase = PurchaseView()
-        purchase.add_supplier('供应商3')
+        purchase.add_supplier('供应商1')
         supplier_name = purchase.select_data_from_db(self.sql3)[0]['supplier_name']
-        self.assertEqual(supplier_name, '供应商3')
+        self.assertEqual(supplier_name, '供应商1')
 
     # 编辑供应商
     def test_02_edit_supplier_case(self):
         """编辑供应商"""
         self.login_action()
         purchase = PurchaseView()
-        purchase.edit_supplier('供应商3', '供应商4')
+        purchase.edit_supplier('供应商1', '供应商2')
         supplier_name = purchase.select_data_from_db(self.sql3)[0]['supplier_name']
-        self.assertEqual(supplier_name, '供应商4')
+        self.assertEqual(supplier_name, '供应商2')
 
     # 禁用供应商
     def test_03_disable_supplier_case(self):
         """禁用供应商"""
         self.login_action()
         purchase = PurchaseView()
-        purchase.supplier_enable_disable('供应商4', False)
+        purchase.supplier_enable_disable('供应商2', False)
         time.sleep(5)
         new_purchase = PurchaseView()
-        new_status = new_purchase.get_supplier_status('供应商4')
+        new_status = new_purchase.get_supplier_status('供应商2')
         print("new_status:", new_status)
         self.assertEqual(new_status, 1)
 
@@ -65,10 +65,10 @@ class PurchaseTest(StartEnd, TestCase_):
         """启用供应商"""
         self.login_action()
         purchase = PurchaseView()
-        purchase.supplier_enable_disable('供应商4', True)
+        purchase.supplier_enable_disable('供应商2', True)
         time.sleep(5)
         new_purchase = PurchaseView()
-        new_status = new_purchase.get_supplier_status('供应商4')
+        new_status = new_purchase.get_supplier_status('供应商2')
         print("new_status:", new_status)
         self.assertEqual(new_status, 0)
 
@@ -76,12 +76,12 @@ class PurchaseTest(StartEnd, TestCase_):
     def test_05_first_purchase_case(self):
         """第一次采购（后选供应商）"""
         self.login_action()
-        old_stock = self.get_goods_num('测试商品3号')
+        old_stock = self.get_goods_num('测试商品8号')
         print("old_stock:", old_stock)
         purchase = PurchaseView()
         purchase.enter_purchase_interface()
-        purchase.choose_goods_action('测试商品3号')
-        purchase.choose_supplier('供应商1')
+        purchase.choose_goods_action('测试商品8号')
+        purchase.choose_supplier('供应商2')
         purchase.define_storage_action()
         purchase_order_num = purchase.get_purchase_order_num()
         ReadData().write_data('purchase_order', 'num1', purchase_order_num)
@@ -99,12 +99,12 @@ class PurchaseTest(StartEnd, TestCase_):
     def test_06_second_purchase_case(self):
         """第二次采购（后选供应商）"""
         self.login_action()
-        old_stock = self.get_goods_num('测试商品3号')
+        old_stock = self.get_goods_num('测试商品8号')
         print("old_stock:", old_stock)
         purchase = PurchaseView()
         purchase.enter_purchase_interface()
-        purchase.choose_supplier('供应商1')
-        purchase.choose_goods_action('测试商品3号')
+        purchase.choose_supplier('供应商2')
+        purchase.choose_goods_action('测试商品8号')
         purchase.define_storage_action()
         purchase_order_num = purchase.get_purchase_order_num()
         ReadData().write_data('purchase_order', 'num2', purchase_order_num)
@@ -122,12 +122,11 @@ class PurchaseTest(StartEnd, TestCase_):
     def test_07_purchase_multiple_goods_case(self):
         """采购多种商品"""
         self.login_action()
-        old_stock = self.get_goods_num('测试商品3号')
         purchase = PurchaseView()
         purchase.enter_purchase_interface()
-        purchase.choose_supplier('供应商1')
-        purchase.choose_goods_action('测试商品3号')
+        purchase.choose_goods_action('测试商品8号')
         purchase.choose_goods_action('测试商品4号')
+        purchase.choose_supplier('供应商2')
         purchase.define_storage_action()
         purchase_order_num = purchase.get_purchase_order_num()
         ReadData().write_data('purchase_order', 'num3', purchase_order_num)
@@ -140,11 +139,11 @@ class PurchaseTest(StartEnd, TestCase_):
     def test_08_purchase_modfiy_price_case(self):
         """采购进货修改价格采购成功"""
         self.login_action()
-        old_stock = self.get_goods_num('测试商品3号')
+        old_stock = self.get_goods_num('测试商品8号')
         purchase = PurchaseView()
         purchase.enter_purchase_interface()
-        purchase.choose_supplier('供应商1')
-        purchase.choose_goods_action('测试商品3号')
+        purchase.choose_supplier('供应商2')
+        purchase.choose_goods_action('测试商品8号')
         purchase.modfiy_price_action(30)
         purchase.define_storage_action()
         purchase_order_num = purchase.get_purchase_order_num()
