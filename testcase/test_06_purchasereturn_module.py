@@ -1,13 +1,10 @@
 # coding:utf-8
 from businessView.purchasereturnView import PurchaseReturnView
-from businessView.purchasereturnorderView import PurchaseReturnOrderView
 from businessView.loginView import LoginView
 from tools.common import Common
 from tools.startend import StartEnd
 from tools.TestCaase import TestCase_
 from tools.readCfg import ReadData
-
-import time
 
 
 class PurchaseReturnTest(StartEnd, TestCase_):
@@ -30,71 +27,199 @@ class PurchaseReturnTest(StartEnd, TestCase_):
 
     # 原始采购单退货
     def test_01_original_purchase_return_case(self):
-        """原始采购退货成功"""
+        """原单退货成功"""
         self.login_action()
-        # 采购退货之前库存
-        num1 = self.get_goods_num() - 1
-        purchasereturn = PurchaseReturnView()
-        # data = purchasereturn.get_csv_data('../data/purchaseOrderNum.csv', 1)
-        purchase_order_num = ReadData().get_data('purchase_order', 'num')
-        purchasereturn.original_purchasereturn_action(purchase_order_num)
-        time.sleep(1)
-        # 采购退货之后库存
-        num2 = purchasereturn.check_stock_qty()
-        ordernum = purchasereturn.get_purchase_return_ordernum()
-        # purchasereturn.save_csv_data('../data/purchasereturnOrderNum.csv', ordernum)
-        ReadData().write_data('purchase_return_order', 'num', ordernum)
-        self.assertTrue(purchasereturn.check_purchase_return_success_status())
-        self.assertEqual(num1, num2)
+        puchasereutrn = PurchaseReturnView()
+        pruchase_order = ReadData().get_data('purchase_order', 'num2')
+        puchasereutrn.original_order_return_action(1, normal=True, keyword=pruchase_order)
+        purchasereturn_num = puchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num1', purchasereturn_num)
+        puchasereutrn.check_purchase_return_success_status()
+        self.assertTrue(puchasereutrn.check_purchase_return_success_status())
 
-    # 采购退货单作废
-    def test_02_obsolete_putchase_return_case(self):
-        """作废采购单退货单"""
+    # 原始采购单退货
+    def test_02_original_purchase_return_case(self):
+        """原单退货（现金）"""
         self.login_action()
-        # 作废之前库存查询
-        num1 = self.get_goods_num() + 1
-        pruchasereturnorder = PurchaseReturnOrderView()
-        # ordernum = pruchasereturnorder.get_csv_data('../data/purchasereturnOrderNum.csv', 1)[0]
-        ordernum = ReadData().get_data('purchase_return_order', 'num')
-        pruchasereturnorder.obsolete_purchase_return_order(1, ordernum)
-        time.sleep(3)
-        num2 = pruchasereturnorder.check_stock_qty()
-        inv_ordernum = pruchasereturnorder.check_invalid_purchase_return_ordernum()
-        # 设置检查点
-        self.assertEqual(num1, num2)
-        self.assertTrue(ordernum, inv_ordernum)
+        puchasereutrn = PurchaseReturnView()
+        pruchase_order = ReadData().get_data('purchase_order', 'num2')
+        puchasereutrn.original_order_return_action(1, keyword=pruchase_order, account='现金')
+        purchasereturn_num = puchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num2', purchasereturn_num)
+        puchasereutrn.check_purchase_return_success_status()
+        self.assertEqual(puchasereutrn.check_account_type(), '现金')
 
-    # 采购直接退货
-    def test_03_direct_purchase_return_case(self):
-        """采购退货直接退货"""
+    # 原始采购单退货
+    def test_03_original_purchase_return_case(self):
+        """原单退货（银行卡）"""
         self.login_action()
-        # 采购退货之前库存
-        num1 = self.get_goods_num() - 1
-        purchasereturn = PurchaseReturnView()
-        purchasereturn.direct_puechaseretur_action()
-        time.sleep(1)
-        # 采购退货之后库存
-        num2 = purchasereturn.check_stock_qty()
-        ordernum = purchasereturn.get_purchase_return_ordernum()
-        ReadData().write_data('purchase_return_order', 'num', ordernum)
-        self.assertTrue(purchasereturn.check_purchase_return_success_status())
-        self.assertEqual(num1, num2)
+        puchasereutrn = PurchaseReturnView()
+        pruchase_order = ReadData().get_data('purchase_order', 'num2')
+        puchasereutrn.original_order_return_action(1, keyword=pruchase_order, account='银行卡')
+        purchasereturn_num = puchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num3', purchasereturn_num)
+        puchasereutrn.check_purchase_return_success_status()
+        self.assertEqual(puchasereutrn.check_account_type(), '银行卡')
 
-    # 复制订单用例
-    def test_04_copy_purchase_return_order_case(self):
-        """复制订单"""
+    # 原始采购单退货
+    def test_04_original_purchase_return_case(self):
+        """原单退货（支付宝账户）"""
         self.login_action()
-        num1 = self.get_goods_num() - 1
-        purchasereturnorder = PurchaseReturnOrderView()
-        # ordernum = purchasereturnorder.get_csv_data('../data/purchasereturnOrderNum.csv', 1)[0]
-        ordernum = ReadData().get_data('purchase_return_order', 'num')
-        purchasereturnorder.copy_purchase_return_order(2, ordernum)
-        order_num = purchasereturnorder.get_purchase_return_order_num()
-        # purchasereturnorder.save_csv_data('../data/purchasereturnOrderNum.csv', order_num)
-        ReadData().write_data('purchase_return_order', 'num', order_num)
-        time.sleep(2)
-        num2 = purchasereturnorder.check_stock_qty()
-        # 设置检查点
-        self.assertTrue(purchasereturnorder.check_transaction_success_status())
-        self.assertEqual(num1, num2)
+        puchasereutrn = PurchaseReturnView()
+        pruchase_order = ReadData().get_data('purchase_order', 'num2')
+        puchasereutrn.original_order_return_action(1, keyword=pruchase_order, account='支付宝账户')
+        purchasereturn_num = puchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num4', purchasereturn_num)
+        puchasereutrn.check_purchase_return_success_status()
+        self.assertEqual(puchasereutrn.check_account_type(), '支付宝账户')
 
+    # 原始采购单退货
+    def test_05_original_purchase_return_case(self):
+        """原单退货（微信支付账户）"""
+        self.login_action()
+        puchasereutrn = PurchaseReturnView()
+        pruchase_order = ReadData().get_data('purchase_order', 'num2')
+        puchasereutrn.original_order_return_action(1, keyword=pruchase_order, account='微信支付账户')
+        purchasereturn_num = puchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num5', purchasereturn_num)
+        puchasereutrn.check_purchase_return_success_status()
+        self.assertEqual(puchasereutrn.check_account_type(), '微信支付账户')
+
+    # 原始采购单退货
+    def test_06_original_purchase_return_case(self):
+        """原单退货（其他账户）"""
+        self.login_action()
+        puchasereutrn = PurchaseReturnView()
+        pruchase_order = ReadData().get_data('purchase_order', 'num2')
+        puchasereutrn.original_order_return_action(1, keyword=pruchase_order, account='其他账户')
+        purchasereturn_num = puchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num6', purchasereturn_num)
+        puchasereutrn.check_purchase_return_success_status()
+        self.assertEqual(puchasereutrn.check_account_type(), '其他账户')
+
+    # 原始采购单退货
+    def test_07_original_purchase_return_case(self):
+        """原单退货（继续退货）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        pruchase_order = ReadData().get_data('purchase_order', 'num2')
+        purchasereutrn.original_order_return_action(1, normal=True, keyword=pruchase_order, is_continue=True)
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num7', purchasereturn_num)
+        self.assertTrue(purchasereutrn.check_purchase_return_success_status())
+
+    # 原始采购单退货
+    def test_08_original_purchase_return_case(self):
+        """原单退货（改价）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        pruchase_order = ReadData().get_data('purchase_order', 'num2')
+        purchasereutrn.original_order_return_action(1, keyword=pruchase_order, modify=1000)
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        total_money = purchasereutrn.check_total_money()
+        ReadData().write_data('purchase_return_order', 'num8', purchasereturn_num)
+        self.assertEqual(total_money, '￥1000.00')
+
+    # 原始采购单退货
+    def test_09_original_purchase_return_case(self):
+        """原单退货（备注）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        pruchase_order = ReadData().get_data('purchase_order', 'num2')
+        purchasereutrn.original_order_return_action(1, keyword=pruchase_order, remark='退货商品')
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        info = purchasereutrn.check_remaks()
+        ReadData().write_data('purchase_return_order', 'num9', purchasereturn_num)
+        self.assertEqual(info, '退货商品')
+
+    # 直接退货
+    def test_10_direct_purchase_return_case(self):
+        """直接退货（正常）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        purchasereutrn.direct_return_action('供应商2', normal=True, name='测试商品8号', num=1)
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num10', purchasereturn_num)
+        self.assertTrue(purchasereutrn.check_purchase_return_success_status())
+
+    # 直接退货
+    def test_11_direct_purchase_return_case(self):
+        """直接退货（现金）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        purchasereutrn.direct_return_action('供应商2', name='测试商品8号', num=1, account='现金')
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num11', purchasereturn_num)
+        self.assertTrue(purchasereutrn.check_purchase_return_success_status())
+
+    # 直接退货
+    def test_12_direct_purchase_return_case(self):
+        """直接退货（银行卡）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        purchasereutrn.direct_return_action('供应商2', name='测试商品8号', num=1, account='银行卡')
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num12', purchasereturn_num)
+        self.assertTrue(purchasereutrn.check_purchase_return_success_status())
+
+    # 直接退货
+    def test_13_direct_purchase_return_case(self):
+        """直接退货（支付宝账户）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        purchasereutrn.direct_return_action('供应商2', name='测试商品8号', num=1, account='支付宝账户')
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num13', purchasereturn_num)
+        self.assertTrue(purchasereutrn.check_purchase_return_success_status())
+
+    # 直接退货
+    def test_14_direct_purchase_return_case(self):
+        """直接退货（微信支付账户）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        purchasereutrn.direct_return_action('供应商2', name='测试商品8号', num=1, account='微信支付账户')
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num14', purchasereturn_num)
+        self.assertTrue(purchasereutrn.check_purchase_return_success_status())
+
+    # 直接退货
+    def test_15_direct_purchase_return_case(self):
+        """直接退货（其他账户）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        purchasereutrn.direct_return_action('供应商2', name='测试商品8号', num=1, account='其他账户')
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num15', purchasereturn_num)
+        self.assertTrue(purchasereutrn.check_purchase_return_success_status())
+
+    # 直接退货
+    def test_16_direct_purchase_return_case(self):
+        """直接退货（继续退货）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        purchasereutrn.direct_return_action('供应商2', normal=True, name='测试商品8号', num=1, is_continue=True)
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num16', purchasereturn_num)
+        self.assertTrue(purchasereutrn.check_purchase_return_success_status())
+
+    # 直接退货
+    def test_17_direct_purchase_return_case(self):
+        """直接退货（改价）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        purchasereutrn.direct_return_action('供应商2', name='测试商品8号', num=1, modify=1000)
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num17', purchasereturn_num)
+        total_money = purchasereutrn.check_total_money()
+        self.assertEqual(total_money, '￥1000.00')
+
+    # 直接退货
+    def test_18_direct_purchase_return_case(self):
+        """直接退货（备注）"""
+        self.login_action()
+        purchasereutrn = PurchaseReturnView()
+        purchasereutrn.direct_return_action('供应商2', name='测试商品8号', num=1, remark='直接退货备注')
+        purchasereturn_num = purchasereutrn.get_purchase_return_ordernum()
+        ReadData().write_data('purchase_return_order', 'num18', purchasereturn_num)
+        info = purchasereutrn.check_remaks()
+        self.assertEqual(info, '直接退货备注')

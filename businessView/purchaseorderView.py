@@ -66,7 +66,7 @@ class PurchaseOrderView(BaseView):
         logging.info(r'进入采购单界面')
         self.click_text(self.purchaseorder_btn)
 
-    # 关键字筛选
+    # 单据筛选
     def filter_order(self, keyword=None, settlement=None, supplier_name=None, returned=None, status=None):
         logging.info(r'点击筛选按钮')
         self.click(self.filter_btn)
@@ -74,7 +74,7 @@ class PurchaseOrderView(BaseView):
             logging.info(r'输入单号')
             self.type(self.keyword_edit, keyword)
         if settlement is not None:
-            logging.info('输入开始时间')
+            logging.info('结算方式')
             self.click(self.choose_settlement)
             self.click_text(settlement)
         if supplier_name is not None:

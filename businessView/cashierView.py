@@ -55,7 +55,7 @@ class CashierView(BaseView):
         self.click_text(self.chooseGoodsBtn_value)
 
     # 选择商品action
-    def choose_goods_action(self, flag=False):
+    def choose_goods_action(self, num, flag=False):
         self.enter_cash()
         if flag is False:
             logging.info(r'点击选择整数价格商品')
@@ -64,7 +64,8 @@ class CashierView(BaseView):
             logging.info(r'点击选择整数价格商品')
             self.click_text(self.moling_goodsName)
         logging.info(r'添加商品数量')
-        self.click(self.addBtn_value)
+        for i in range(0, num):
+            self.click(self.addBtn_value)
         time.sleep(1)
         logging.info(r'确认选择商品')
         self.click(self.confirmBtn)
@@ -79,15 +80,15 @@ class CashierView(BaseView):
         self.click(self.confirmCashBtn_value)
 
     # 正常收银用例
-    def normal_cashier_action(self):
-        self.choose_goods_action()
+    def normal_cashier_action(self, num):
+        self.choose_goods_action(num)
         logging.info(r'去结账')
         self.click(self.payBtn)
         self.pay_bill_action()
 
     # 商品打折改价
-    def goods_modify_discount(self, value1, value2, flag=False):
-        self.choose_goods_action(flag=flag)
+    def goods_modify_discount(self, num, value1, value2, flag=False):
+        self.choose_goods_action(num, flag=flag)
         logging.info('点击改价按钮')
         self.click(self.modfiy_btn)
         logging.info('点击改价')
@@ -137,8 +138,8 @@ class CashierView(BaseView):
             self.pay_bill_action()
 
     # 挂单成功后销售成功
-    def hangup_order_cashier_action(self):
-        self.choose_goods_action()
+    def hangup_order_cashier_action(self, num):
+        self.choose_goods_action(num)
         logging.info(r'点击挂单按钮')
         self.click(self.hangup_btn_value)
         logging.info(r'进入挂单界面')

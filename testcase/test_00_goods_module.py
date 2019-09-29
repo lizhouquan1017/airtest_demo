@@ -125,7 +125,7 @@ class GoodsTest(StartEnd, TestCase_):
         self.login_action()
         goods = GoodsViews()
         goods.enter_goods_list()
-        goods.type_must_field('测试商品5号', 100, 200, '均色', '均码', 19891020, 50, '20190917-01', '测试商品备注')
+        goods.type_must_field('测试商品5号', 100, 200, '均色', '均码', 19891020, 80, '20190917-01', '测试商品备注')
         goods.confirm_add_goods()
         status = goods.check_success_status()
         goods.get_goods_details()

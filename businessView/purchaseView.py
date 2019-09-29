@@ -123,13 +123,14 @@ class PurchaseView(BaseView):
         self.click(self.box_define)
 
     # 采购选购商品
-    def choose_goods_action(self, name):
+    def choose_goods_action(self, name, num):
         logging.info(r'点击选择已有商品')
         self.click_text(self.chooseGoods_value)
         logging.info(r'选择商品')
         self.click_text(name)
         logging.info(r'添加商品数量')
-        self.click(self.add_btn)
+        for i in range(0, num):
+            self.click(self.add_btn)
         logging.info(r'确认选择商品')
         self.click(self.goods_confirm_btn)
         logging.info(r'商品列表界面确认')

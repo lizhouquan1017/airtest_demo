@@ -19,10 +19,16 @@ with open('../config/devices.yaml', 'r', encoding='gbk') as file:
 class StartEnd(unittest.TestCase):
 
     def setUp(self):
-        connect_device('Android:///' + devicesname)
-        start_app(package)
+        time.sleep(10)
+        try:
+            connect_device('Android:///' + devicesname)
+            start_app(package)
+        except:
+            connect_device('Android:///' + devicesname)
+            start_app(package)
 
     def tearDown(self):
         clear_app(package)
         stop_app(package)
+        time.sleep(8)
 
